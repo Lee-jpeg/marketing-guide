@@ -2,7 +2,7 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import CommentSection from './CommentSection';
 
-function ContentViewer({ chapter }) {
+function ContentViewer({ chapter, prevChapter, nextChapter, onNavigate }) {
   if (!chapter) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
@@ -48,6 +48,53 @@ function ContentViewer({ chapter }) {
         </section>
       ))}
 
+      {/* Navigation Buttons Container */}
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginTop: '60px',
+        marginBottom: '60px',
+        borderTop: '1px solid var(--border-color)',
+        paddingTop: '32px'
+      }}>
+        <div style={{ flex: 1 }}>
+          {prevChapter && (
+            <button
+              onClick={() => onNavigate(prevChapter)}
+              className="toss-nav-btn"
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                textAlign: 'left'
+              }}
+            >
+              <span style={{ fontSize: '13px', color: 'var(--color-text-muted)', marginBottom: '4px', fontWeight: '500' }}>이전 글</span>
+              <span style={{ fontSize: '16px', color: 'var(--color-primary)', fontWeight: '600' }}>{prevChapter.title}</span>
+            </button>
+          )}
+        </div>
+
+        <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
+          {nextChapter && (
+            <button
+              onClick={() => onNavigate(nextChapter)}
+              className="toss-nav-btn"
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-end',
+                textAlign: 'right'
+              }}
+            >
+              <span style={{ fontSize: '13px', color: 'var(--color-text-muted)', marginBottom: '4px', fontWeight: '500' }}>다음 글</span>
+              <span style={{ fontSize: '16px', color: 'var(--color-primary)', fontWeight: '600' }}>{nextChapter.title}</span>
+            </button>
+          )}
+        </div>
+      </div>
+
       <CommentSection chapterId={chapter.title} />
 
       <style>{`
@@ -83,6 +130,18 @@ function ContentViewer({ chapter }) {
           padding: 12px 16px;
           border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
           margin-bottom: 16px;
+        }
+        .toss-nav-btn {
+          background-color: transparent;
+          padding: 16px 20px;
+          border-radius: var(--radius-sm);
+          transition: background-color 0.2s ease, transform 0.1s ease;
+          width: 100%;
+          max-width: 300px;
+        }
+        .toss-nav-btn:hover {
+          background-color: rgba(49, 130, 246, 0.06);
+          transform: translateY(-2px);
         }
       `}</style>
     </div>

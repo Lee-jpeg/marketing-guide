@@ -37,6 +37,34 @@ function App() {
     }).filter(part => part !== null);
   }, [searchQuery]);
 
+  // Calculate generic Previous & Next chapters globally
+  const getPrevNextChapters = () => {
+    let prevChapter = null;
+    let nextChapter = null;
+
+    if (!activeChapter) return { prevChapter, nextChapter };
+
+    let allChapters = [];
+    guideData.forEach(part => {
+      if (part.chapters) {
+        allChapters = allChapters.concat(part.chapters);
+      }
+    });
+
+    const currentIndex = allChapters.findIndex(ch => ch.title === activeChapter.title);
+
+    if (currentIndex > 0) {
+      prevChapter = allChapters[currentIndex - 1];
+    }
+    if (currentIndex !== -1 && currentIndex < allChapters.length - 1) {
+      nextChapter = allChapters[currentIndex + 1];
+    }
+
+    return { prevChapter, nextChapter };
+  };
+
+  const { prevChapter, nextChapter } = getPrevNextChapters();
+
   return (
     <div className="app-container">
       <Layout
@@ -46,7 +74,15 @@ function App() {
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
       >
-        <ContentViewer chapter={activeChapter} />
+        <ContentViewer
+          chapter={activeChapter}
+          prevChapter={prevChapter}
+          nextChapter={nextChapter}
+          onNavigate={(chapter) => {
+            setActiveChapter(chapter);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+        />
       </Layout>
     </div>
   );
