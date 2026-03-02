@@ -8,7 +8,7 @@
   --color-text-title: #333d4b;
   --color-text-body: #4e5968;
   --color-text-muted: #8b95a1;
-  
+
   --border-color: #E5E8EB;
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -71,4 +71,20 @@ button {
   box-shadow: var(--shadow-sm);
   padding: 32px;
   margin-bottom: 24px;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  :root {
+    --sidebar-width: 260px;
+    /* Slightly narrower sidebar on mobile */
+  }
+
+  /* Adjust body or general spacing if needed */
+
+  .toss-card {
+    padding: 24px 16px;
+    /* Smaller padding on cards for mobile */
+    border-radius: var(--radius-md);
+  }
 }

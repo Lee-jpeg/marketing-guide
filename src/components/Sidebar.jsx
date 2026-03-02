@@ -1,7 +1,7 @@
 import React from 'react';
 import SearchBar from './SearchBar';
 
-function Sidebar({ data, activeChapter, onSelectChapter, searchQuery, setSearchQuery }) {
+function Sidebar({ data, activeChapter, onSelectChapter, searchQuery, setSearchQuery, isMobile, isOpen, onClose }) {
     return (
         <aside style={{
             width: 'var(--sidebar-width)',
@@ -13,9 +13,12 @@ function Sidebar({ data, activeChapter, onSelectChapter, searchQuery, setSearchQ
             borderRight: '1px solid var(--border-color)',
             overflowY: 'auto',
             padding: '24px 16px',
-            zIndex: 100
+            zIndex: 100,
+            transform: isMobile ? (isOpen ? 'translateX(0)' : 'translateX(-100%)') : 'none',
+            transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+            boxShadow: isMobile && isOpen ? 'var(--shadow-md)' : 'none'
         }}>
-            <div style={{ marginBottom: '32px', padding: '0 8px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px', padding: '0 8px' }}>
                 <h1 style={{
                     fontSize: '20px',
                     fontWeight: '700',
@@ -24,6 +27,14 @@ function Sidebar({ data, activeChapter, onSelectChapter, searchQuery, setSearchQ
                 }}>
                     마케팅·CRM<br />완전 가이드
                 </h1>
+                {isMobile && (
+                    <button onClick={onClose} style={{ padding: '4px', cursor: 'pointer' }} aria-label="메뉴 닫기">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 6L6 18" stroke="var(--color-text-title)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M6 6L18 18" stroke="var(--color-text-title)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                    </button>
+                )}
             </div>
 
             <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
