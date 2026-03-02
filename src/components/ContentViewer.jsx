@@ -102,6 +102,19 @@ function ContentViewer({ chapter, prevChapter, nextChapter, onNavigate }) {
           from { opacity: 0; transform: translateY(10px); }
           to { opacity: 1; transform: translateY(0); }
         }
+        .markdown-body {
+          word-break: break-word;
+          overflow-wrap: break-word;
+          width: 100%;
+        }
+        .markdown-body pre {
+          overflow-x: auto;
+          max-width: 100%;
+        }
+        .markdown-body img, .markdown-body video {
+          max-width: 100%;
+          height: auto;
+        }
         .markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4 {
           color: var(--color-text-title);
           margin-top: 24px;
